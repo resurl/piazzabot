@@ -243,6 +243,3 @@ async def hello(ctx):
     await ctx.send(f'hello {ctx.author.mention}')
 
 bot.run(TOKEN)
-
-
-
