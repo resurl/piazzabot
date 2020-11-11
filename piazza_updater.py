@@ -3,6 +3,7 @@ import html
 import re
 import typing
 from typing import List
+from html.parser import HTMLParser
 
 from piazza_api import Piazza
 
@@ -11,6 +12,19 @@ from piazza_api import Piazza
 class InvalidPostID(Exception):
     pass
 
+class PiazzaHTMLParser(HTMLParser):
+
+    def __init__(self):
+        self.parsed_text = ""
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "a":
+            for attr in attrs:
+                if attr[0] == "href":
+                    parsed_text += attr[1]
+                    break
+        
+        parsed_text += self.get_starttag_text()
 
 class PiazzaHandler:
     """
